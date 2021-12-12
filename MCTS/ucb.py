@@ -49,7 +49,12 @@ class MultiArmedBandit():
         self.update(index)
 
     def max_greedy_choose(self):
-        index = np.argsort(-np.array(self.bandits_reward))[0]
+        max_index = np.argsort(-np.array(self.bandits_reward))[0]
+        index_list = []
+        for i in range(self.n):
+            if self.bandits_reward[i] == self.bandits_reward[max_index]:
+                index_list.append(i)
+        index = random.choice(index_list)
         self.update(index)
 
     def epsilon_greedy_choose(self, epsilon=0.2):
@@ -78,9 +83,9 @@ def plt_reward(reward_list):
     plt.plot(x, y4, marker='o', ms=1, label="ucb")
 
     plt.xticks(rotation=45)
-    plt.xlabel("次数")
-    plt.ylabel("方法")
-    plt.title("多臂赌博机")
+    plt.xlabel("N")
+    plt.ylabel("Total reward")
+    plt.title("Multi Armed Bandit")
     plt.legend(loc="upper left")
 
     plt.show()
